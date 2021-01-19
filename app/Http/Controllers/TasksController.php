@@ -16,10 +16,10 @@ class TasksController extends Controller
      // getでTasks/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
-        // メッセージ一覧を取得
+        // タスク一覧を取得
         $tasks = Task::all();
 
-        // メッセージ一覧ビューでそれを表示
+        // タスク一覧ビューでそれを表示
         return view('tasks.index', [
             'tasks' => $tasks,
         ]);
@@ -50,7 +50,7 @@ class TasksController extends Controller
      // postでtasks/にアクセスされた場合の「新規登録処理
     public function store(Request $request)
     {
-        // メッセージを作成
+        // タスクを作成
         $task = new Task;
         $task->content = $request->content;
         $task->save();
@@ -72,7 +72,7 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
 
         // タスク編集ビューでそれを表示
-        return view('tasks.edit', [
+        return view('tasks.show', [
             'task' => $task,
         ]);
     }

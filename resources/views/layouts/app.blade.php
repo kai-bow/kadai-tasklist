@@ -21,7 +21,7 @@
                     <ul class="navbar-nav mr-auto"></ul>
                     <ul class="navbar-nav">
                          {{-- タスク作成ページへのリンク --}}
-                        <li class="nav-item"> {!! link_to_route('tasks.create', '新規メッセージの投稿', [], ['class' => 'btn btn-primary']) !!}</li>
+                        <li class="nav-item"> {!! link_to_route('tasks.create', '新規タスクの投稿', [], ['class' => 'btn btn-primary']) !!}</li>
                     </ul>
                 </div>
             </nav>
