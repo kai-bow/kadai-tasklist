@@ -27,8 +27,6 @@
             </nav>
         </header>
 
-        {{-- ナビゲーションバー --}}
-        @include('commons.navbar')
         
         <div class="container">
              {{-- エラーメッセージ --}}
