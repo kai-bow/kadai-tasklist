@@ -92,6 +92,7 @@ class TasksController extends Controller
         // タスク編集ビューでそれを表示
         return view('tasks.edit', [
             'task' => $task,
+            ]);
     }
 
     /**
