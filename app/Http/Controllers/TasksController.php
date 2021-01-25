@@ -20,9 +20,10 @@ class TasksController extends Controller
         $tasks = Task::all();
 
         // タスク一覧ビューでそれを表示
-        return view('tasks.index', [
-            'tasks' => $tasks,
-        ]);
+            return view('tasks.index', [
+                'tasks' => $tasks,
+            ]);
+        
     }
 
     /**
@@ -59,6 +60,7 @@ class TasksController extends Controller
         
         // タスクを作成
         $task = new Task;
+        $task->user_id = \Auth::id();
         $task->content = $request->content;
         $task->status = $request->status;    // 追加
         $task->save();
@@ -80,9 +82,11 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
 
         // タスク編集ビューでそれを表示
-        return view('tasks.show', [
-            'task' => $task,
-        ]);
+        if (\Auth::id() === $task->user_id){
+            return view('tasks.show', [
+                'task' => $task,
+            ]);
+        }
     }
 
     /**
@@ -98,9 +102,11 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
 
         // タスク編集ビューでそれを表示
-        return view('tasks.edit', [
-            'task' => $task,
+        if (\Auth::id() === $task->user_id){
+            return view('tasks.edit', [
+                'task' => $task,
             ]);
+        }
     }
 
     /**
@@ -122,9 +128,11 @@ class TasksController extends Controller
          // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
         // タスクを更新
+        if (\Auth::id() === $task->user_id){
         $task->status = $request->status;    // 追加
         $task->content = $request->content;
         $task->save();
+        }
 
         // トップページへリダイレクトさせる
         return redirect('/');
@@ -141,8 +149,10 @@ class TasksController extends Controller
     {
         // idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
-        // タスクを削除
-        $task->delete();
+       // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
 
         // トップページへリダイレクトさせる
         return redirect('/');
